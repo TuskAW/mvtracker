@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+          content="MVTracker is the first data-driven multi-view 3D point tracker for tracking arbitrary 3D points across multiple cameras.">
+    <meta name="keywords" content="MVTracker, Multi-view, 3D Tracking, Robotics, Point Tracking, Computer Vision">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MVTracker: Multi-View 3D Point Tracking</title>
+
+    <meta property="og:title" content="MVTracker: Multi-View 3D Point Tracking"/>
+    <meta property="og:description"
+          content="MVTracker is the first data-driven multi-view 3D point tracker for tracking arbitrary 3D points across multiple cameras."/>
+    <meta property="twitter:card" content="summary"/>
+    <meta property="twitter:title" content="MVTracker: Multi-View 3D Point Tracking"/>
+    <meta property="twitter:description"
+          content="MVTracker is the first data-driven multi-view 3D point tracker for tracking arbitrary 3D points across multiple cameras."/>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./static/images/favicon-96x96.png" sizes="96x96"/>
+    <link rel="icon" type="image/svg+xml" href="./static/images/favicon.svg"/>
+    <link rel="shortcut icon" href="./static/images/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="./static/images/apple-touch-icon.png"/>
+    <meta name="apple-mobile-web-app-title" content="MVTracker"/>
+    <link rel="manifest" href="./static/images/site.webmanifest"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
+            async></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCWZF8PQ4F"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-CCWZF8PQ4F');
+    </script>
+
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+</head>
+
+<body>
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-4 publication-title" style="font-size: 2rem;">
+                        Multi-View 3D Point Tracking
+                    </h1>
+
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block"><a
+                                href="https://m43.github.io/">Frano Raji&#x10D;</a><sup>1</sup>,</span>
+                        <span class="author-block"><a
+                                href="https://haofeixu.github.io/">Haofei Xu</a><sup>1</sup>,</span>
+                        <span class="author-block"><a
+                                href="https://markomih.github.io/">Marko Mihajlovic</a><sup>1</sup>,</span>
+                        <span class="author-block"><a
+                                href="https://siyuanliii.github.io/">Siyuan Li</a><sup>1</sup>,</span>
+                        <span class="author-block"><a
+                                href="https://github.com/iremddemir">Irem Demir</a><sup>1</sup>,</span>
+                        <br>
+                        <span class="author-block"><a
+                                href="https://github.com/emircangun">Emircan Gündoğdu</a><sup>1</sup>,</span>
+                        <span class="author-block"><a href="https://www.kelei.site/">Lei Ke</a><sup>2</sup>,</span>
+                        <span class="author-block"><a href="https://vlg.inf.ethz.ch/team/Dr-Sergey-Prokudin.html">Sergey Prokudin</a><sup>1,3</sup>,</span>
+                        <span class="author-block"><a
+                                href="https://people.inf.ethz.ch/marc.pollefeys/">Marc Pollefeys</a><sup>1,4</sup>,</span>
+                        <span class="author-block"><a href="https://vlg.inf.ethz.ch/team/Prof-Dr-Siyu-Tang.html">Siyu Tang</a><sup>1</sup></span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors" style="margin-bottom: 10px;">
+                        <span class="author-block"><sup>1</sup>ETH Zürich</span>&nbsp;&nbsp;&nbsp;
+                        <span class="author-block"><sup>2</sup>Carnegie Mellon University</span>&nbsp;&nbsp;&nbsp;
+                        <span class="author-block"><sup>3</sup>Balgrist University Hospital</span>&nbsp;&nbsp;&nbsp;
+                        <span class="author-block"><sup>4</sup>Microsoft</span>
+                    </div>
+
+                    <div class="columns is-centered" style="margin-bottom: 0em">
+                        <div class="column is-max-desktop has-text-centered">
+                            <h1 class="title is-4 publication-title" style="margin-bottom:0rem">
+                            </h1>
+                            <h1 class="title is-4 publication-title" style="margin-bottom:0rem">
+                                <strong><img src="static/images/palm-tree_1f334.png"
+                                             style="width: 1em; height: 1em; vertical-align: top;"> ICCV 2025 (Oral)
+                                    <img
+                                            src="static/images/coconut_1f965.png"
+                                            style="width: 1em; height: 1em; vertical-align: top;"></strong>
+                            </h1>
+
+                        </div>
+                    </div>
+
+
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <!-- PDF Link. -->
+                            <span class="link-block">
+                              <a class="external-link button is-normal is-rounded is-dark"
+                                 style="pointer-events: none; opacity: 0.7;">
+                                <span class="icon">
+                                  <i class="fas fa-file-pdf"></i>
+                                </span>
+                                <span>Paper</span>
+                              </a>
+                            </span>
+                            <!-- Code Link. -->
+                            <span class="link-block">
+                              <a href="https://github.com/ethz-vlg/mvtracker"
+                                 class="external-link button is-normal is-rounded is-dark">
+                                <span class="icon">
+                                  <i class="fab fa-github"></i>
+                                </span>
+                                <span>Code</span>
+                              </a>
+                            </span>
+                            <!-- Demo Link (placeholder) -->
+                            <span class="link-block">
+                              <a class="external-link button is-normal is-rounded is-dark"
+                                 style="pointer-events: none; opacity: 0.7;">
+                                <span>🤗 Demo</span>
+                              </a>
+                            </span>
+
+                            <!-- Video/Presentation Link (placeholder) -->
+                            <span class="link-block">
+                              <a class="external-link button is-normal is-rounded is-dark"
+                                 style="pointer-events: none; opacity: 0.7;">
+                                <span class="icon">
+                                  <i class="fas fa-video"></i>
+                                </span>
+                                <span>Video</span>
+                              </a>
+                            </span>
+
+                            <!-- Slides Link (placeholder) -->
+                            <span class="link-block">
+                              <a class="external-link button is-normal is-rounded is-dark"
+                                 style="pointer-events: none; opacity: 0.7;">
+                                <span class="icon">
+                                  <i class="fas fa-file-powerpoint"></i>
+                                </span>
+                                <span>Slides (coming soon…)</span>
+                              </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .video-border {
+        display: inline-block;
+        padding: 2px; /* adjust thickness of your 'border' */
+        border-radius: 4px;
+        background: linear-gradient(45deg, #ff9a9e, #fad0c4); /* try different gradient colors */
+    }
+
+    .video-border video {
+        display: block;
+        border: none;
+        border-radius: 4px; /* match the wrapper for a consistent look */
+    }
+
+    .video-fix-flickering-lines-rendering-quirk {
+        isolation: isolate;
+        -webkit-mask-image: -webkit-radial-gradient(white, black);
+        -webkit-backface-visibility: hidden;
+
+    }
+</style>
+
+<style>
+    #teaser-video {
+        max-width: 85%;
+        margin: 0 auto;
+        display: block;
+        border: none; /* remove the solid border */
+        border-radius: 4px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    #architecture-img {
+        width: 90%;
+        margin: 0 auto;
+        display: block;
+        border: none;
+        border-radius: 0; /* removed border radius */
+        box-shadow: none; /* removed box shadow */
+    }
+
+    /* Enhanced style to further reduce space between buttons and teaser video */
+    .hero.teaser {
+        padding-top: 0;
+        margin-top: -3rem; /* Added negative margin to pull the teaser section up */
+    }
+
+    .hero.teaser .hero-body {
+        padding-top: 0; /* Reduced from 1rem to 0 */
+    }
+</style>
+<section class="hero teaser">
+    <div class="container is-max-desktop">
+        <div class="hero-body">
+            <video id="teaser-video" class="hover-controls" autoplay muted loop playsinline height="100%"
+                   poster="./resources/teaser-poster.jpg">
+                <source src="./resources/teaser-video-v7.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle" style="text-align: center;"></h2>
+        </div>
+    </div>
+</section>
+
+
+<section class="section" style="padding-top: 1rem;">
+    <div class="container is-max-desktop">
+
+        <div class="columns is-centered">
+            <div class="column is-full-width has-text-centered">
+                <h2 class="title is-4" style="font-weight: 700;">Abstract</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        We introduce <strong>MVTracker</strong>, the first data-driven multi-view 3D point tracker,
+                        designed to track arbitrary points in dynamic scenes using multiple camera views. Unlike
+                        monocular trackers, which struggle with depth ambiguities and occlusion, or previous
+                        multi-camera methods that require over 20 cameras and tedious per-sequence optimization, our
+                        feed-forward model directly predicts 3D correspondences using a practical number of cameras
+                        (e.g., four), enabling robust and accurate online tracking. Given known camera poses and either
+                        sensor-based or estimated multi-view depth, our tracker fuses multi-view features into a unified
+                        3D point cloud and applies k-nearest-neighbors correlation alongside a transformer-based update
+                        to reliably estimate long-range 3D correspondences, even under occlusion. We train on 5K
+                        synthetic multi-view Kubric sequences and evaluate on two real-world benchmarks: Panoptic
+                        Studio and DexYCB, achieving median trajectory errors of 3.1 cm and 2.0 cm, respectively.
+                        Notably, on DexYCB, our method surpasses the strongest monocular tracker by 63.6% and a
+                        triplane-based multi-view baseline by 53.5%. <strong>MVTracker</strong> also generalizes better
+                        to diverse camera setups of 1–8 cameras with varying vantage points and video lengths of 24–150
+                        frames. By releasing our pre-trained tracker alongside training and evaluation datasets, we aim
+                        to set a new standard for multi-view 3D tracking research and provide a practical tool for a
+                        wide range of real-world applications.
+                    </p>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns is-centered">
+            <div class="column is-full-width has-text-centered" style="margin-bottom: 0.75rem;">
+                <h2 class="title is-4" style="font-weight: 700;">Method</h2>
+                <div class="content has-text-justified">
+                    <p style="margin-bottom: 0;">
+                        Given multi-view RGB videos and camera parameters, our method first extracts per-view feature
+                        maps using a CNN encoder. We then construct a fused 3D point cloud from estimated or
+                        sensor-provided depth, associating each point with learned features. Directed kNN-based
+                        correlation links points across space and time, capturing spatiotemporal relationships across
+                        views. A transformer iteratively refines point trajectories using attention over multi-view
+                        correlations. The model processes sequences in overlapping sliding windows, producing temporally
+                        consistent 3D point trajectories with occlusion-aware visibility predictions.
+                    </p>
+                    <video id="animated-pipeline-video"
+                           class="hover-controls video-fix-flickering-lines-rendering-quirk"
+                           autoplay muted loop playsinline
+                           poster="./resources/animated-pipeline-poster.jpg">
+                        <source src="./resources/animated-pipeline-video-v2.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .rerun-placeholder {
+                position: relative;
+                width: 100%;
+                max-width: 100%;
+                height: 720px;
+                background-color: #111;
+                background-size: cover;
+                background-position: center;
+                border-radius: 8px;
+                cursor: pointer;
+                overflow: hidden;
+            }
+
+            .rerun-play-button {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.6);
+                color: #fff;
+                padding: 0.6rem 1.2rem;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 1rem;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(4px);
+                transition: background 0.2s ease;
+            }
+
+            .rerun-play-button:hover {
+                background: rgba(40, 40, 40, 0.8);
+            }
+        </style>
+
+        <style>
+            .gallery {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1.85rem;
+                justify-content: center;
+                padding: 1.25rem 0;
+            }
+
+            .card {
+                width: 300px;
+                height: 488px;
+                border-radius: 16px;
+                background-color: rgba(24, 24, 24, 1.0);
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .card img {
+                width: 100%;
+                height: 370px;
+                object-fit: cover;
+                display: block;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .card-content {
+                padding: 0.75rem 1rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                flex: 1;
+                transition: background-color 0.2s ease;
+            }
+
+            .card-content:hover {
+                background-color: rgba(28, 28, 28, 1.0);
+            }
+
+            .card-title {
+                font-size: 1rem;
+                font-weight: 600;
+                color: white;
+                margin-bottom: 0.25rem;
+            }
+
+            .card-meta {
+                font-size: 0.85rem;
+                line-height: 1.4;
+                color: var(--subtitle-color, #b2b2bb);
+            }
+        </style>
+
+        <div class="columns is-centered">
+            <div class="column is-full-width has-text-centered" style="margin-bottom: 1.5rem;">
+
+                <h2 class="title is-4" style="font-weight: 700;" id="qualitative-visualization">
+                    Qualitative Visualization
+                </h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Use the interactive viewer below to explore our qualitative results. Navigate with WASD/QE keys,
+                        drag to rotate, scroll to zoom, and use the space bar or arrows to control playback. You can
+                        toggle visual elements in the left panel. As rendering runs in the browser, performance may
+                        vary; we recommend opening only one viewer at a time. To reduce memory usage (~1 GB), we omit
+                        RGB/depth previews, feature maps, kNN neighborhoods, limit track number, and we may crop the
+                        scene. DUSt3R results show confidence-filtered (>5) point clouds. GT tracks, if available, are
+                        shown in white. Occlusion is indicated with gray (GT tracks) or black (predictions). For
+                        fullscreen, you can open from the gallery below or use rerun locally (pip install
+                        rerun-sdk==0.21.0;
+                        rerun).
+                    </p>
+
+                    <div id="rerun-container" class="rerun-placeholder" onclick="loadRerunViewer()"
+                         style="background-image: url('resources/rerun/preview.png');">
+                        <div class="rerun-play-button">Click to Load Viewer</div>
+                    </div>
+
+                    <script>
+                        function loadRerunViewer() {
+                            const container = document.getElementById('rerun-container');
+                            const iframe = document.createElement('iframe');
+                            iframe.src = "https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-results/4d-dress__lunge.rrd";
+                            iframe.style.width = "100%";
+                            iframe.style.height = "720px";
+                            iframe.style.border = "none";
+                            container.replaceWith(iframe);
+                        }
+                    </script>
+
+                    <div class="gallery">
+                        <div class="card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-results/4d-dress__lunge.rrd"
+                               target="_blank">
+                                <img src="./resources/rerun/4d-dress__lunge.png"
+                                     alt="4D‑Dress Lunge preview">
+                            </a>
+                            <div class="card-content">
+                                <div class="card-title">4D‑Dress – Lunge</div>
+                                <div class="card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Studio capture (106 cams)<br>
+                                    GT available: No
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-results/4d-dress__waterbending.rrd"
+                               target="_blank">
+                                <img src="./resources/rerun/4d-dress__waterbending.png"
+                                     alt="4D‑Dress Waterbending preview">
+                            </a>
+                            <div class="card-content">
+                                <div class="card-title">4D‑Dress – Waterbending</div>
+                                <div class="card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Studio capture (106 cams)<br>
+                                    GT available: No
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-results/dexycb__seq0_kinect.rrd"
+                               target="_blank">
+                                <img src="./resources/rerun/dexycb__seq0_kinect.png"
+                                     alt="DexYCB Kinect preview">
+                            </a>
+                            <div class="card-content">
+                                <div class="card-title">DexYCB – Sequence 0 (Kinect)</div>
+                                <div class="card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Kinect cameras <br>
+                                    GT available: Yes (from GT meshes)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-results/dexycb__seq0_dust3r.rrd"
+                               target="_blank">
+                                <img src="./resources/rerun/dexycb__seq0_dust3r.png"
+                                     alt="DexYCB DUSt3R preview">
+                            </a>
+                            <div class="card-content">
+                                <div class="card-title">DexYCB – Sequence 0 (DUSt3R)</div>
+                                <div class="card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: DUSt3R estimate<br>
+                                    GT available: Yes (from GT meshes)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-results/panoptic__basketball.rrd"
+                               target="_blank">
+                                <img src="./resources/rerun/panoptic__basketball.png"
+                                     alt="Panoptic Studio preview">
+                            </a>
+                            <div class="card-content">
+                                <div class="card-title">Panoptic Studio – Basketball</div>
+                                <div class="card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Dynamic 3DGS (27 cams)<br>
+                                    GT available: Yes (from TAPVID-3D)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-results/kubric__seq0.rrd"
+                               target="_blank">
+                                <img src="./resources/rerun/kubric__seq0.png"
+                                     alt="MV-Kubric preview">
+                            </a>
+                            <div class="card-content">
+                                <div class="card-title">MV-Kubric – Sequence 0</div>
+                                <div class="card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Blender simulation<br>
+                                    GT available: Yes (from simulation)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <style>
+            .mini-gallery {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                justify-content: center;
+                padding: 12px 0;
+            }
+
+            .mini-card {
+                width: 150px;
+                height: 244px;
+                border-radius: 8px;
+                background-color: rgba(24, 24, 24, 1.0);
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .mini-card img {
+                width: 100%;
+                height: 176px;
+                object-fit: cover;
+                display: block;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .mini-card-content {
+                padding: 4px 9px;
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                flex: 1;
+                transition: background-color 0.2s ease;
+            }
+
+            .mini-card-content:hover {
+                background-color: rgba(28, 28, 28, 1.0);
+            }
+
+            .mini-card-title {
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: white;
+            }
+
+            .mini-card-meta {
+                font-size: 0.85rem;
+                line-height: 1.4;
+                color: var(--subtitle-color, #b2b2bb);
+            }
+        </style>
+
+        <style>
+            .legend {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 1.25rem;
+                flex-wrap: wrap;
+                margin: 0 0 0.25rem 0;
+                font-size: 1rem;
+                font-weight: 400;
+            }
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .legend-color {
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                display: inline-block;
+                flex-shrink: 0;
+            }
+
+            .legend-color.gt {
+                background-color: white;
+                border: 1px solid #999;
+            }
+        </style>
+
+        <div class="columns is-centered">
+            <div class="column is-full-width has-text-centered">
+                <h2 class="title is-4" style="font-weight: 700;" id="qualitative-comparison">
+                    Qualitative Comparison
+                </h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Explore evaluation results of compared methods in the interactive viewer and gallery below.
+                        Compared to monocular 3D point trackers such as
+                        <a href="https://github.com/henry123-boy/SpaTracker" target="_blank">SpatialTracker</a>
+                        and
+                        <a href="https://github.com/facebookresearch/tapvid" target="_blank">TAPIP3D</a>,
+                        MVTracker leverages the multi-view information and produces view-consistent trajectories with less jitter.
+                        Compared to triplane and optimization-based baselines, our learned prior yields more precise tracks and fewer
+                        failures.
+                        <span style="color:red;">Red lines</span> indicate distance to ground truth;
+                        dark-colored points are predicted as not visible in any view.
+                        To save memory, we batch tracks into one object, visualize first 50 (of 512) evaluation tracks,
+                        and for Panoptic only the last frame.
+                    </p>
+
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe
+                                src="https://www.youtube.com/embed/Q-zjqV_wF70?rel=0&autoplay=1&mute=1&loop=1&playlist=Q-zjqV_wF70&vq=hd2160"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen
+                                style="position: absolute; top:0; left:0; width:100%; height:100%;">
+                        </iframe>
+                    </div>
+                    <br>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <span class="legend-color gt"></span> Ground Truth
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: rgb(46, 204, 113);"></span>
+                            MVTracker
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: rgb(52, 152, 219);"></span>
+                            SpatialTrackerV1
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: rgb(241, 196, 15);"></span>
+                            TAPIP3D
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: rgb(155, 89, 182);"></span>
+                            Triplane
+                        </div>
+                    </div>
+
+                    <div id="rerun-comparison-container" style="position: relative;">
+                        <video id="rerun-comparison-video"
+                               class="hover-controls video-fix-flickering-lines-rendering-quirk"
+                               autoplay muted loop playsinline
+                               style="width: 100%; height: auto; display: block;"
+                               poster="./resources/comparison/preview-poster.jpg">
+                            <source src="./resources/comparison/preview.mp4" type="video/mp4">
+                        </video>
+                        <div class="rerun-play-button"
+                             onclick="loadRerunComparison()"
+                             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                                    background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 5px;
+                                    cursor: pointer;">
+                            Click Here to Load Viewer
+                        </div>
+                    </div>
+
+                    <script>
+                        function loadRerunComparison() {
+                            const container = document.getElementById('rerun-comparison-container');
+                            const iframe = document.createElement('iframe');
+                            iframe.src = "https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-comparisons/dexycb__seq0_kinect.rrd";
+                            iframe.style.width = "100%";
+                            iframe.style.height = "720px";
+                            iframe.style.border = "none";
+                            container.replaceWith(iframe);
+                        }
+                    </script>
+
+                    <div class="mini-gallery">
+                        <div class="mini-card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-comparisons/dexycb__seq0_kinect.rrd"
+                               target="_blank">
+                                <img src="./resources/comparison/dexycb__seq0_kinect.png"
+                                     alt="DexYCB Seq0 Kinect preview">
+                            </a>
+                            <div class="mini-card-content">
+                                <div class="mini-card-title">DexYCB (seq. 0)</div>
+                                <div class="mini-card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Kinect
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-comparisons/dexycb__seq1_kinect.rrd"
+                               target="_blank">
+                                <img src="./resources/comparison/dexycb__seq1_kinect.png"
+                                     alt="DexYCB Seq1 Kinect preview">
+                            </a>
+                            <div class="mini-card-content">
+                                <div class="mini-card-title">DexYCB (seq. 1)</div>
+                                <div class="mini-card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Kinect
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-comparisons/dexycb__seq0_dust3r.rrd"
+                               target="_blank">
+                                <img src="./resources/comparison/dexycb__seq0_dust3r.png"
+                                     alt="DexYCB Seq0 DUSt3R preview">
+                            </a>
+                            <div class="mini-card-content">
+                                <div class="mini-card-title">DexYCB (seq. 0)</div>
+                                <div class="mini-card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: DUSt3R
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-comparisons/panoptic__basketball.rrd"
+                               target="_blank">
+                                <img src="./resources/comparison/panoptic__basketball.png"
+                                     alt="Panoptic Basketball preview">
+                            </a>
+                            <div class="mini-card-content">
+                                <div class="mini-card-title">Panoptic (seq. 0)</div>
+                                <div class="mini-card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Dyn. 3DGS
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-comparisons/panoptic__softball.rrd"
+                               target="_blank">
+                                <img src="./resources/comparison/panoptic__softball.png"
+                                     alt="Panoptic Softball preview">
+                            </a>
+                            <div class="mini-card-content">
+                                <div class="mini-card-title">Panoptic (seq. 4)</div>
+                                <div class="mini-card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Dyn. 3DGS
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mini-card">
+                            <a href="https://app.rerun.io/version/0.21.0/index.html?url=https://huggingface.co/ethz-vlg/mvtracker-rrd/resolve/main/assets/rerun-comparisons/kubric__seq0.rrd"
+                               target="_blank">
+                                <img src="./resources/comparison/kubric__seq0.png"
+                                     alt="Kubric Seq0 preview">
+                            </a>
+                            <div class="mini-card-content">
+                                <div class="mini-card-title">MV-Kubric (seq. 0)</div>
+                                <div class="mini-card-meta">
+                                    Cameras: 4 <br>
+                                    Depth: Blender
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section" id="BibTeX" style="padding-top: 0rem;">
+    <div class="container is-max-desktop content">
+        <h2 class="title is-4" style="font-weight: 700;">BibTeX</h2>
+        <pre><code>@inproceedings{rajic2025mvtracker,
+  title     = {Multi-View 3D Point Tracking},
+  author    = {Raji{\v{c}}, Frano and Xu, Haofei and Mihajlovic, Marko and Li, Siyuan and Demir, Irem and G{\"u}ndo{\u{g}}du, Emircan and Ke, Lei and Prokudin, Sergey and Pollefeys, Marc and Tang, Siyu},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+  year      = {2025}
+}</code></pre>
+    </div>
+</section>
+
+
+<section class="section" id="Acknowledgements" style="padding-top: 0rem;">
+    <div class="container is-max-desktop content has-text-justified">
+        <h2 class="title is-4" style="font-weight: 700;">Acknowledgements</h2>
+        <p>
+            We are grateful for the insightful discussions with Yiming Wang, Zador Pataki, Luigi Piccinelli,
+            Paul‑Edouard Sarlin, and Philipp Lindenberger. We thank Ignacio Rocco and Skanda Koppula for their helpful
+            clarifications regarding TAPVid-3D. This work was conducted within the Proficiency flagship project funded
+            by the Swiss Innovation Agency Innosuisse. It was also supported as part of the Swiss AI initiative by a
+            grant from the Swiss National Supercomputing Centre under project ID A03 and A136 on Alps.
+        </p>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content has-text-centered">
+                    <p>
+                        This webpage template is adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>,
+                        under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0
+                        License</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    document.querySelectorAll(".hover-controls").forEach((video) => {
+        video.addEventListener("mouseenter", () => {
+            video.setAttribute("controls", "controls");
+        });
+        video.addEventListener("mouseleave", () => {
+            video.removeAttribute("controls");
+        });
+    });
+</script>
+
+</body>
+
+</html>
