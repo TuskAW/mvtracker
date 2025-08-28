@@ -1,0 +1,41 @@
+defaults:
+  - train
+  - _self_
+
+modes:
+  eval_only: true
+
+trainer:
+  precision: 32-true
+
+# Optional overrides specific to evaluation runs
+datasets:
+  eval:
+    names: [ "panoptic-multiview-views1_7_14_20" ]
+    max_seq_len: 1000
+evaluation:
+  consume_model_stats: false        # whether to report model stats (which can slow down the forward pass)
+  evaluator:
+    rerun_viz_indices: null
+    forward_pass_log_indices: null
+    mp4_track_viz_indices: null
+
+#    rerun_viz_indices: [ 0,1,2 ]
+#    forward_pass_log_indices: [ 0,1,2 ]
+#    mp4_track_viz_indices: [ 0,1,2 ]
+
+#    rerun_viz_indices: [ 0,3,27, 2,23 ]
+#    forward_pass_log_indices: null
+#    mp4_track_viz_indices: [ 0,3,27, 2,23 ]
+
+#    rerun_viz_indices: [ 0, 7 ]
+#    forward_pass_log_indices: null
+#    mp4_track_viz_indices: [ 0, 7 ]
+
+#    rerun_viz_indices: [ 0, 5 ]
+#    forward_pass_log_indices: null
+#    mp4_track_viz_indices: [ 0, 5 ]
+
+#    rerun_viz_indices: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29 ]
+#    forward_pass_log_indices: [ 0,1,2,3,4 ]
+#    mp4_track_viz_indices: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29 ]

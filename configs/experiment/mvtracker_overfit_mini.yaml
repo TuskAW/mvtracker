@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - mvtracker_overfit
+
+experiment_path: ./logs/debug/mvtracker-overfit-mini
+
+datasets:
+  train:
+    traj_per_sample: 8
+
+model:
+  fmaps_dim: 32

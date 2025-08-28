@@ -1,0 +1,24 @@
+# @package _global_
+defaults:
+  - default
+
+model:
+  _target_: mvtracker.models.core.monocular_baselines.MonocularToMultiViewAdapter
+  model:
+    _target_: mvtracker.models.core.monocular_baselines.TAPIP3DWrapper
+    ckpt: checkpoints/tapip3d_final.pth
+    num_iters: 6
+    grid_size: 8
+    resolution_factor: 1 # --> [ 384, 512 ]
+#    resolution_factor: 2 # --> [ 543, 724 ]
+
+evaluation:
+  interp_shape: [ 384, 512 ] # --> resolution_factor = 1
+#  interp_shape: [ 543, 724 ] # --> resolution_factor = 2
+  predictor_settings:
+    kubric:
+      visibility_threshold: 0.01
+    dex_ycb:
+      visibility_threshold: 0.01
+    panoptic:
+      visibility_threshold: 0.01

@@ -1,0 +1,115 @@
+defaults:
+  - _self_
+  - model: mvtracker
+
+experiment_path: ???                # where to store checkpoints, visualizations, etc.
+restore_ckpt_path: null             # resume from checkpoint
+
+# === Datasets ===
+datasets:
+  root: ./datasets
+  train:
+    name: kubric-multiview-v3-training
+    batch_size: 1
+    sequence_len: 24                # frames per sequence
+    traj_per_sample: 2048           # number of 3D points/trajectories per sample
+    max_videos: null                # takes all training videos by default
+    kubric_max_depth: 24
+    num_workers: 8
+  eval:
+    names:
+      - panoptic-multiview-views1_7_14_20
+      - kubric-multiview-v3-overfit-on-training
+      - kubric-multiview-v3-views0123
+      - kubric-multiview-v3-duster0123
+      - dex-ycb-multiview
+      - dex-ycb-multiview-duster0123
+    num_workers: 4
+    max_seq_len: 1000
+
+# === Trainer Settings ===
+trainer:
+  num_steps: 200000
+  eval_freq: 10000
+  viz_freq: 10000
+  save_ckpt_freq: 500
+
+  lr: 0.0005
+  gamma: 0.8
+  wdecay: 0.00001
+  anneal_strategy: linear
+  grad_clip: 1.0
+  precision: 16-mixed               # training precision (e.g., 16-mixed, bf16-mixed or 32-true)
+  visibility_loss_weight: 0.1
+
+  augment_train_iters: false
+  augment_train_iters_warmup: 2000
+
+# === Evaluation Settings ===
+evaluation:
+  consume_model_stats: false        # whether to report model stats (which can slow down the forward pass)
+  evaluator:
+    _target_: mvtracker.evaluation.evaluator_3dpt.Evaluator
+    rerun_viz_indices: null
+    forward_pass_log_indices: null
+    mp4_track_viz_indices: [0]
+
+# === Execution Modes ===
+modes:
+  debug: false                      # enable for quick iteration
+  tune_per_scene: false             # overfit to single scene (debugging)
+  validate_at_start: false          # run eval before train starts
+  do_initial_static_pretrain: false # run static-only phase first
+  pretrain_only: false              # stop after static pretraining
+  eval_only: false                  # skip training, just run evaluation
+
+  debugging_hotfix_datapoint_path: null  # path to a dumped datapoint (no need to set debug flag)
+
+# === Reproducibility ===
+reproducibility:
+  # Note that reproducibility will not work if
+  # floating point precision is set to 16-mixed,
+  # but with 32 it will. Note also that the number
+  # of data loading workers (num_workers) might
+  # affect reproducibility as well. The number of
+  # GPUs surely affects reproducibility.
+  seed: 36
+  deterministic: false              # speeds up training at expense of determinism
+
+# === Augmentations ===
+augmentations:
+  probability: 0.8
+
+  rgb: true
+  depth: true
+  variable_depth_type: true
+  variable_num_views: true
+
+  cropping: true
+  cropping_size: [384, 512]
+  variable_vggt_crop_size: false
+  keep_principal_point_centered: false
+
+  variable_trajpersample: true
+
+  scene_transform: true
+  camera_params_noise: true
+  normalize_scene_following_vggt: false
+
+# === Logging ===
+logging:
+  log_wandb: false
+  wandb_project: mvtracker-ablation
+  tags: ["kubric", "3dpt", "multiview"]
+
+# === Extras ===
+extras:
+  print_config: true                     # pretty print config tree at the start
+  ignore_warnings: false                 # disable python warnings if they annoy you
+  enable_faulthandler_traceback: false   # enable traceback dump on timeout for debugging of main process hanging
+  faulthandler_traceback_timeout: 600    # timeout in seconds before dumping traceback (e.g. 600 = 10 min)
+
+# === Hydra Settings ===
+hydra:
+  run:
+    dir: ${experiment_path}

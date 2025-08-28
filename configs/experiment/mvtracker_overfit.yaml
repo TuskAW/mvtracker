@@ -1,0 +1,44 @@
+# @package _global_
+defaults:
+  - override /model: mvtracker
+
+experiment_path: ./logs/debug/mvtracker-overfit
+
+datasets:
+  root: ./datasets
+  train:
+    name: kubric-multiview-v3-views0123-training
+    batch_size: 1
+    sequence_len: 24
+    traj_per_sample: 512
+    num_workers: 4
+  eval:
+    names: [kubric-multiview-v3-views0123-overfit-on-training]
+    num_workers: 2
+    max_seq_len: 1000
+
+trainer:
+  num_steps: 1500
+  eval_freq: 500
+  viz_freq: 500
+  save_ckpt_freq: 500
+  augment_train_iters: false
+
+augmentations:
+  probability: 1.0
+  rgb: false
+  depth: false
+  cropping: true
+  variable_trajpersample: false
+  scene_transform: false
+  camera_params_noise: false
+  variable_depth_type: false
+  variable_num_views: false
+
+modes:
+  tune_per_scene: true
+  dont_validate_at_start: true
+  do_initial_static_pretrain: false
+  pretrain_only: false
+  eval_only: false
+  debug: false

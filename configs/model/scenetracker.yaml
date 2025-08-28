@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - default
+
+model:
+  _target_: mvtracker.models.core.monocular_baselines.MonocularToMultiViewAdapter
+  model:
+    _target_: mvtracker.models.core.monocular_baselines.SceneTrackerWrapper
+    ckpt: checkpoints/scenetracker-odyssey-200k.pth
+    return_2d_track: false
+
+evaluation:
+  interp_shape: [ 384, 512 ]

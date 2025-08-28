@@ -1,0 +1,6 @@
+# @package _global_
+defaults:
+  - default
+
+model:
+  _target_: mvtracker.models.core.copycat.CopyCat

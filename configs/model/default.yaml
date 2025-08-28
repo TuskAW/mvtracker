@@ -1,0 +1,52 @@
+# @package _global_
+model:
+  _target_: ???
+
+trainer:
+  train_iters: 4
+
+evaluation:
+  eval_iters: 4
+  interp_shape: null
+
+  predictor_settings:
+    kubric:
+      visibility_threshold: 0.9
+      grid_size: 0
+      n_grids_per_view: 1
+      local_grid_size: 0
+      local_extent: 50
+      sift_size: 0
+      num_uniformly_sampled_pts: 0
+    dex_ycb:
+      visibility_threshold: 0.9
+      grid_size: 0
+      n_grids_per_view: 1
+      local_grid_size: 0
+      local_extent: 50
+      sift_size: 0
+      num_uniformly_sampled_pts: 0
+    panoptic:
+      visibility_threshold: 0.9
+      grid_size: 0
+      n_grids_per_view: 1
+      local_grid_size: 0
+      local_extent: 50
+      sift_size: 0
+      num_uniformly_sampled_pts: 0
+    tapvid2d-davis:
+      visibility_threshold: 0.9
+      grid_size: 0
+      n_grids_per_view: 1
+      local_grid_size: 0
+      local_extent: 50
+      sift_size: 0
+      num_uniformly_sampled_pts: 0
+    generic:
+      visibility_threshold: 0.9
+      grid_size: 0
+      n_grids_per_view: 1
+      local_grid_size: 0
+      local_extent: 50
+      sift_size: 0
+      num_uniformly_sampled_pts: 0

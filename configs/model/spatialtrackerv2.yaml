@@ -1,0 +1,19 @@
+# @package _global_
+defaults:
+  - default
+
+model:
+  _target_: mvtracker.models.core.monocular_baselines.MonocularToMultiViewAdapter
+  model:
+    _target_: mvtracker.models.core.monocular_baselines.SpaTrackerV2Wrapper
+    model_type: online  # or offline, whichever is better on a specific dataset
+    vo_points: 756
+
+evaluation:
+  predictor_settings:
+    kubric:
+      visibility_threshold: 0.01
+    dex_ycb:
+      visibility_threshold: 0.01
+    panoptic:
+      visibility_threshold: 0.01

@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - default
+
+model:
+  _target_: mvtracker.models.core.monocular_baselines.MonocularToMultiViewAdapter
+  model:
+    _target_: mvtracker.models.core.monocular_baselines.CoTrackerOfflineWrapper
+    model_name: cotracker2
+    grid_size: 10

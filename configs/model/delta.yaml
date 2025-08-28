@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - default
+
+model:
+  _target_: mvtracker.models.core.monocular_baselines.MonocularToMultiViewAdapter
+  model:
+    _target_: mvtracker.models.core.monocular_baselines.DELTAWrapper
+    ckpt: checkpoints/densetrack3d.pth
+    upsample_factor: 4
+    grid_size: 20
+    return_2d_track: false

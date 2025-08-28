@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - default
+
+model:
+  _target_: mvtracker.models.core.monocular_baselines.MonocularToMultiViewAdapter
+  model:
+    _target_: mvtracker.models.core.monocular_baselines.LocoTrackWrapper
+    model_size: base
+
+evaluation:
+  interp_shape: [ 256, 256 ]

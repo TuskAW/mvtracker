@@ -1,0 +1,49 @@
+# @package _global_
+defaults:
+  - default
+
+model:
+  _target_: mvtracker.models.core.spatracker.spatracker_multiview.MultiViewSpaTracker
+
+  sliding_window_len: 12
+  stride: 4
+  add_space_attn: true
+  use_3d_pos_embed: true
+  remove_zeromlpflow: true
+  concat_triplane_features: true
+  num_heads: 8
+  hidden_size: 384
+  space_depth: 6
+  time_depth: 6
+  fmaps_dim: 128
+  triplane_xres: 128
+  triplane_yres: 128
+  triplane_zres: 128
+
+evaluation:
+  interp_shape: [ 512, 512 ]    # This checkpoint was trained on 512x512 Kubric sequences
+  predictor_settings:
+    kubric:
+      visibility_threshold: 0.5
+      grid_size: 4
+      local_grid_size: 18
+    dex_ycb:
+      visibility_threshold: 0.01
+      grid_size: 4
+      local_grid_size: 18
+    panoptic:
+      visibility_threshold: 0.01
+      grid_size: 4
+      local_grid_size: 18
+
+#restore_ckpt_path: checkpoints/spatracker_multiview_trained-on-kubric-depth_100000.pth
+#model:
+#  triplane_xres: 128
+#  triplane_yres: 128
+#  triplane_zres: 128
+
+#restore_ckpt_path: checkpoints/spatracker_multiview_trained-on-duster-depth_100000.pth
+#model:
+#  triplane_xres: 256
+#  triplane_yres: 256
+#  triplane_zres: 128
