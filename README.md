@@ -25,10 +25,17 @@
 
 MVTracker is the first **data-driven multi-view 3D point tracker** for tracking arbitrary 3D points across multiple cameras. It fuses multi-view features into a unified 3D feature point cloud, within which it leverages kNN-based correlation to capture spatiotemporal relationships across views. A transformer then iteratively refines the point tracks, handling occlusions and adapting to varying camera setups without per-sequence optimization.
 
+<p float="left">
+  <img alt="selfcap" src="https://github.com/user-attachments/assets/b502d193-c37c-43be-af6c-653b5de7597e" width="48%" /> 
+  <img alt="dexycb" src="https://github.com/user-attachments/assets/d14d4c6c-152e-4040-b29b-3da4b7e8b913" width="48%" /> 
+  <img alt="4d-dress-stretching" src="https://github.com/user-attachments/assets/f3eabdda-59e1-4032-b345-c4603ea86fc0" width="48%" />
+  <img alt="4d-dress-avatarmove" src="https://github.com/user-attachments/assets/3fef9924-84ad-4295-95e2-5b82ae7c3053" width="48%" />
+</p>
+
 
 ## Updates
 
-- <ins>August 29, 2025</ins>: Public release.
+- <ins>August 28, 2025</ins>: Public release.
 
 
 ## Quick Start
