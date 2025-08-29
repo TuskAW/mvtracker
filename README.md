@@ -1,7 +1,7 @@
 <div align="center" style="line-height:1.2; margin:0; padding:0;">
 <h1 style="margin-bottom:0em;">Multi-View 3D Point Tracking</h1>
 
-[![](https://img.shields.io/badge/arXiv-2508.TBD-b31b1b)](#)
+<a href="https://arxiv.org/abs/2508.21060"><img src="https://img.shields.io/badge/arXiv-2508.21060-b31b1b" alt="arXiv"></a>
 <a href="https://ethz-vlg.github.io/mvtracker/"><img src="https://img.shields.io/badge/Project%20Page-009688?logo=internetcomputer&logoColor=white" alt="Project Page"></a>
 <a href="https://ethz-vlg.github.io/mvtracker/#qualitative-visualization"><img src="https://img.shields.io/badge/Interactive%20Results-673ab7?logo=apachespark&logoColor=white" alt="Interactive Results"></a>
 [![](https://img.shields.io/badge/🤗%20Demo-Coming%20soon…-ffcc00)](#)
