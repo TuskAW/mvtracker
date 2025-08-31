@@ -89,13 +89,12 @@ Alternatively, you can run our interactive demo:
 python demo.py --rerun save --lightweight
 ```
 
-By default this saves a lightweight `.rrd` recording (e.g., `mvtracker_demo.rrd`) that you can open in any Rerun viewer. The simplest option is to drag and drop the file into the [online viewer](https://app.rerun.io/version/0.21.0). For the best experience, you can also install Rerun locally (`pip install rerun-sdk==0.21.0; rerun`).
-
+By default this saves a lightweight `.rrd` recording (e.g., `mvtracker_demo.rrd`) that you can open in any Rerun viewer. The simplest option is to drag and drop the file into the [online viewer](https://app.rerun.io/version/0.21.0). For the best experience, you can also install Rerun locally (`pip install rerun-sdk==0.21.0; rerun`). Results can be explored interactively in the viewer with WASD/QE navigation, mouse rotation and zoom, and timeline playback controls.
 
 <details>
-<summary>[Interactive viewer on a cluster - click to expand]</summary>
+<summary>[Interactive viewer on a cluster or with GUI support - click to expand]</summary>
   
-If you are working on a cluster, you can stream results directly to your laptop by forwarding a port (`ssh -R 9876:localhost:9876 user@cluster`) and then running the demo in streaming mode (`python demo.py --rerun stream`), which sends live data into your local Rerun instance. If you are running the demo locally with GUI support, you can automatically spawn a Rerun window (`python demo.py --rerun spawn`). In all cases, results can be explored interactively with WASD/QE navigation, mouse rotation and zoom, and timeline playback controls.
+If you are working on a cluster, you can stream results directly to your laptop by forwarding a port (`ssh -R 9876:localhost:9876 user@cluster`) and then running the demo in streaming mode (`python demo.py --rerun stream`), which sends live data into your local Rerun instance. If you are running the demo locally with GUI support, you can automatically spawn a Rerun window (`python demo.py --rerun spawn`).
 
 </details>
 
