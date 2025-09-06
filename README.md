@@ -190,7 +190,7 @@ Evaluation is driven by Hydra configs. See [`mvtracker/cli/eval.py`](./mvtracker
 To evaluate MVTracker with our best model, first download the checkpoint from [Hugging Face](https://huggingface.co/ethz-vlg/mvtracker):
 
 ```bash
-wget https://huggingface.co/ethz-vlg/mvtracker/resolve/main/checkpoints/mvtracker_200000_june2025.pth -P checkpoints/
+wget https://huggingface.co/ethz-vlg/mvtracker/resolve/main/mvtracker_200000_june2025.pth -P checkpoints/
 ```
 
 Then run:
